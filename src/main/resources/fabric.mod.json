@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "shine",
+	"version": "${version}",
+	"name": "Shine",
+	"description": "Adds selective bloom to Minecraft.",
+	"icon": "assets/shine/shine4.png",
+	"authors": [
+		"tapeQ"
+	],
+	"license": "CC0-1.0",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.bloom.BloomMod"
+		],
+		"client": [
+			"com.bloom.client.BloomClient"
+		],
+		"modmenu": [
+			"com.bloom.client.config.BloomModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"shine.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": ">=0.140.0+1.21.11",
+		"yet_another_config_lib_v3": ">=3.8.1+1.21.11-fabric"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

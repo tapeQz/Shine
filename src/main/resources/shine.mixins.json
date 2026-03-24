@@ -1,0 +1,24 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"plugin": "com.bloom.mixin.BloomMixinPlugin",
+	"package": "com.bloom.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ChunkSectionsToRenderMixin",
+		"SectionCompilerMixin",
+		"ModelBlockRendererMixin",
+		"LiquidBlockRendererMixin",
+		"IndigoAbstractTerrainRenderContextMixin",
+		"sodium.SodiumBlockRendererMixin",
+		"sodium.SodiumChunkMeshBufferBuilderMixin",
+		"sodium.SodiumDefaultFluidRendererMixin",
+		"sodium.SodiumShaderLoaderMixin",
+		"sodium.SodiumShaderChunkRendererMixin",
+		"accessor.PostChainAccessor",
+		"accessor.PostPassAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

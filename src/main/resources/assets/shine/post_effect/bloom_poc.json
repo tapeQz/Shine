@@ -1,0 +1,271 @@
+{
+	"targets": {
+		"bloom_extract": {},
+		"bloom_ping": {},
+		"bloom_pong": {}
+	},
+	"passes": [
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/bloom_extract",
+			"inputs": [
+				{
+					"sampler_name": "Depth",
+					"target": "minecraft:main",
+					"use_depth_buffer": true
+				},
+				{
+					"sampler_name": "Source",
+					"target": "shine:source"
+				}
+			],
+			"uniforms": {
+				"BloomExtractConfig": [
+					{
+						"name": "Threshold",
+						"type": "float",
+						"value": 0.65
+					},
+					{
+						"name": "Scale",
+						"type": "float",
+						"value": 1.25
+					},
+					{
+						"name": "HighlightClamp",
+						"type": "float",
+						"value": 1.0
+					},
+					{
+						"name": "SoftKnee",
+						"type": "float",
+						"value": 0.2
+					},
+					{
+						"name": "MaxDistance",
+						"type": "float",
+						"value": 64.0
+					},
+					{
+						"name": "NearPlane",
+						"type": "float",
+						"value": 0.05
+					},
+					{
+						"name": "FarPlane",
+						"type": "float",
+						"value": 1024.0
+					},
+					{
+						"name": "SourceMode",
+						"type": "float",
+						"value": 0.0
+					}
+				]
+			},
+			"output": "bloom_extract"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/fast_blur",
+			"inputs": [
+				{
+					"sampler_name": "In",
+					"target": "bloom_extract",
+					"bilinear": true
+				}
+			],
+			"uniforms": {
+				"BlurConfig": [
+					{
+						"name": "BlurDir",
+						"type": "vec2",
+						"value": [1.0, 0.0]
+					},
+					{
+						"name": "Radius",
+						"type": "float",
+						"value": 4.0
+					}
+				]
+			},
+			"output": "bloom_ping"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/fast_blur",
+			"inputs": [
+				{
+					"sampler_name": "In",
+					"target": "bloom_ping",
+					"bilinear": true
+				}
+			],
+			"uniforms": {
+				"BlurConfig": [
+					{
+						"name": "BlurDir",
+						"type": "vec2",
+						"value": [0.0, 1.0]
+					},
+					{
+						"name": "Radius",
+						"type": "float",
+						"value": 4.0
+					}
+				]
+			},
+			"output": "bloom_pong"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/fast_blur",
+			"inputs": [
+				{
+					"sampler_name": "In",
+					"target": "bloom_pong",
+					"bilinear": true
+				}
+			],
+			"uniforms": {
+				"BlurConfig": [
+					{
+						"name": "BlurDir",
+						"type": "vec2",
+						"value": [1.0, 0.0]
+					},
+					{
+						"name": "Radius",
+						"type": "float",
+						"value": 0.0
+					}
+				]
+			},
+			"output": "bloom_ping"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/fast_blur",
+			"inputs": [
+				{
+					"sampler_name": "In",
+					"target": "bloom_ping",
+					"bilinear": true
+				}
+			],
+			"uniforms": {
+				"BlurConfig": [
+					{
+						"name": "BlurDir",
+						"type": "vec2",
+						"value": [0.0, 1.0]
+					},
+					{
+						"name": "Radius",
+						"type": "float",
+						"value": 0.0
+					}
+				]
+			},
+			"output": "bloom_pong"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/fast_blur",
+			"inputs": [
+				{
+					"sampler_name": "In",
+					"target": "bloom_pong",
+					"bilinear": true
+				}
+			],
+			"uniforms": {
+				"BlurConfig": [
+					{
+						"name": "BlurDir",
+						"type": "vec2",
+						"value": [1.0, 0.0]
+					},
+					{
+						"name": "Radius",
+						"type": "float",
+						"value": 0.0
+					}
+				]
+			},
+			"output": "bloom_ping"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/fast_blur",
+			"inputs": [
+				{
+					"sampler_name": "In",
+					"target": "bloom_ping",
+					"bilinear": true
+				}
+			],
+			"uniforms": {
+				"BlurConfig": [
+					{
+						"name": "BlurDir",
+						"type": "vec2",
+						"value": [0.0, 1.0]
+					},
+					{
+						"name": "Radius",
+						"type": "float",
+						"value": 0.0
+					}
+				]
+			},
+			"output": "bloom_pong"
+		},
+		{
+			"vertex_shader": "minecraft:core/screenquad",
+			"fragment_shader": "shine:post/bloom_composite",
+			"inputs": [
+				{
+					"sampler_name": "Main",
+					"target": "minecraft:main"
+				},
+				{
+					"sampler_name": "Bloom",
+					"target": "bloom_pong"
+				},
+				{
+					"sampler_name": "Depth",
+					"target": "minecraft:main",
+					"use_depth_buffer": true
+				}
+			],
+			"uniforms": {
+				"BloomCompositeConfig": [
+					{
+						"name": "Strength",
+						"type": "float",
+						"value": 0.85
+					}
+				],
+				"BloomCompositeDistanceConfig": [
+					{
+						"name": "MaxDistance",
+						"type": "float",
+						"value": 64.0
+					},
+					{
+						"name": "NearPlane",
+						"type": "float",
+						"value": 0.05
+					},
+					{
+						"name": "FarPlane",
+						"type": "float",
+						"value": 1024.0
+					}
+				]
+			},
+			"output": "minecraft:main"
+		}
+	]
+}
