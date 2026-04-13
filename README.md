@@ -8,7 +8,7 @@ ___
 
 
 # What does it do?
-Adds **selective Bloom** to the game, **no Iris required**. 
+Adds **selective Bloom** to the game, **no Iris/shaders required**. 
 
 Little to **no performance loss** when enabled, with support for [Sodium](https://modrinth.com/mod/sodium).
 
@@ -33,7 +33,18 @@ ___
 
 
 
+___
+# **Incompatible mods**
 
+<details>
+<summary>Spoiler</summary>
+
+- chunks fade in
+- immersive portals
+- vulkanmod
+- sodium core shader support
+
+</details>
 
 ___
 Copyright © 2026 tapeQ
