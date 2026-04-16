@@ -40,6 +40,7 @@ ___
 <summary>Spoiler</summary>
 
 - chunks fade in
+- nvidium
 - immersive portals
 - vulkanmod
 - sodium core shader support
