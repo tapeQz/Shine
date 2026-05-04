@@ -51,5 +51,3 @@ ___
 Copyright © 2026 tapeQ
 
 - **You can include this mod in a modpack**, as long as it provides credit and links to the Modrinth or CurseForge page.
-
-- You may not reupload, mirror, or redistribute this mod as a standalone download.
