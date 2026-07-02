@@ -1,6 +1,7 @@
 {
 	"key.shine.toggle": "Toggle Bloom",
 	"key.category.shine.main": "Shine",
+	"key.categories.shine.main": "Shine"
 	"shine.config.title": "Shine Settings",
 	"shine.config.category.main": "Shine",
 	"shine.config.category.unused_blocks": "Add Block Overrides",
