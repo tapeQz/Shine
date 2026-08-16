@@ -1,0 +1,54 @@
+--- a/src/main/resources/assets/shine/shaders/post/experimental.fsh
++++ b/src/main/resources/assets/shine/shaders/post/experimental.fsh
+@@ -10,11 +10,8 @@
+ uniform sampler2D AfterimageEcho4Sampler;
+ uniform sampler2D AfterimageEcho5Sampler;
+ uniform sampler2D AfterimageEcho6Sampler;
+-uniform sampler2D AfterimageEcho7Sampler;
+-uniform sampler2D AfterimageEcho8Sampler;
+-uniform sampler2D AfterimageEcho9Sampler;
+-uniform sampler2D AfterimageEcho10Sampler;
+-uniform sampler2D AfterimageEcho11Sampler;
++// GL 3.3 guarantees 16 fragment texture units. Keep seven afterimage
++// histories so this pass uses 3 base + 7 history + 6 lens samplers = 16.
+ uniform sampler2D RbLensWideSampler;
+ uniform sampler2D RbLensHaloSampler;
+ uniform sampler2D RbLensDotASampler;
+@@ -1638,8 +1635,7 @@ vec3 applyPsychedelicAfterimage(vec2 uv, vec3 color) {
+         || AfterimageCompositeEchoCount < 0.5
+         || max(
+             max(max(AfterimageCompositeWeight0, AfterimageCompositeWeight1), max(AfterimageCompositeWeight2, AfterimageCompositeWeight3)),
+-            max(max(max(AfterimageCompositeWeight4, AfterimageCompositeWeight5), max(AfterimageCompositeWeight6, AfterimageCompositeWeight7)),
+-                max(max(AfterimageCompositeWeight8, AfterimageCompositeWeight9), max(AfterimageCompositeWeight10, AfterimageCompositeWeight11)))
++            max(max(AfterimageCompositeWeight4, AfterimageCompositeWeight5), AfterimageCompositeWeight6)
+         ) <= 1.0e-4
+     ) {
+         return color;
+@@ -1661,25 +1657,10 @@ vec3 applyPsychedelicAfterimage(vec2 uv, vec3 color) {
+     float offsetPixels = max(AfterimageCompositeOffsetPixels, 0.0) * split;
+     vec2 offset = direction * offsetPixels / max(OutSize, vec2(1.0));
+     float edgeBoost = mix(1.0, smoothstep(0.08, 0.78, radialLength), saturate(PsychedelicRefractionPeripheral) * 0.45);
+-    float echoCount = clamp(round(AfterimageCompositeEchoCount), 1.0, 12.0);
++    float echoCount = clamp(round(AfterimageCompositeEchoCount), 1.0, 7.0);
+-
++
+     vec3 echoSum = vec3(0.0);
+     float amountSum = 0.0;
+-    if (echoCount >= 12.0) {
+-        accumulateAfterimageEcho(echoSum, amountSum, AfterimageEcho11Sampler, uv, offset, split, AfterimageCompositeWeight11, edgeBoost);
+-    }
+-    if (echoCount >= 11.0) {
+-        accumulateAfterimageEcho(echoSum, amountSum, AfterimageEcho10Sampler, uv, offset, split, AfterimageCompositeWeight10, edgeBoost);
+-    }
+-    if (echoCount >= 10.0) {
+-        accumulateAfterimageEcho(echoSum, amountSum, AfterimageEcho9Sampler, uv, offset, split, AfterimageCompositeWeight9, edgeBoost);
+-    }
+-    if (echoCount >= 9.0) {
+-        accumulateAfterimageEcho(echoSum, amountSum, AfterimageEcho8Sampler, uv, offset, split, AfterimageCompositeWeight8, edgeBoost);
+-    }
+-    if (echoCount >= 8.0) {
+-        accumulateAfterimageEcho(echoSum, amountSum, AfterimageEcho7Sampler, uv, offset, split, AfterimageCompositeWeight7, edgeBoost);
+-    }
+     if (echoCount >= 7.0) {
+         accumulateAfterimageEcho(echoSum, amountSum, AfterimageEcho6Sampler, uv, offset, split, AfterimageCompositeWeight6, edgeBoost);
+     }
